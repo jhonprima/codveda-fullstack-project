@@ -1,0 +1,75 @@
+/* Pengaturan dasar untuk seluruh halaman */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Styling untuk Header */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Styling untuk container utama */
+main {
+    max-width: 1200px;
+    margin: 20px auto; /* auto kiri-kanan agar center */
+    padding: 20px;
+}
+
+main h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+/* * Ini bagian styling responsif (Grid) 
+ * Ini akan membuat kartu-kartu kita rapi dalam barisan
+ */
+#product-list-container {
+    display: grid;
+    /* * Buat kolom-kolom:
+     * - 'repeat': ulangi pola
+     * - 'auto-fit': buat kolom sebanyak mungkin
+     * - 'minmax(250px, 1fr)': setiap kolom minimal 250px,
+     * tapi bisa membesar (1fr) untuk mengisi ruang.
+     * Ini membuat layout-nya responsif secara otomatis.
+     */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; /* Jarak antar kartu */
+}
+
+/* * Styling untuk "Kartu" Produk 
+ * (Kita harus tambahkan class 'product-card' di app.js)
+ */
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Efek sedikit terangkat saat hover */
+}
+
+.product-card h3 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.product-card p {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e67e22;
+}

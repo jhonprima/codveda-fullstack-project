@@ -1,0 +1,62 @@
+// This is your Prisma schema file...
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CONSUMEN
+  ADMIN
+}
+
+model Product {
+  id    Int     @id @default(autoincrement())
+  name  String
+  price Int
+  imageUrl String?
+  
+  cartItems CartItem[] 
+  wishlistItems WishlistItem[] 
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  role      Role    @default(CONSUMEN)
+  
+  cartItems CartItem[] 
+  wishlistItems WishlistItem[]
+}
+
+model CartItem {
+  id          Int       @id @default(autoincrement())
+  quantity    Int       @default(1)
+  
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  
+  productId   Int
+  // === TAMBAHKAN 'onDelete: Cascade' DI SINI ===
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId]) 
+}
+
+model WishlistItem {
+  id          Int       @id @default(autoincrement())
+  
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  
+  productId   Int
+  // === TAMBAHKAN 'onDelete: Cascade' DI SINI ===
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId]) 
+}
