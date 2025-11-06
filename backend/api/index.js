@@ -11,10 +11,13 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 const app = express();
 const prisma = new PrismaClient();
 
-// MIDDLEWARE
+// === MIDDLEWARE (INI BAGIAN YANG DIPERBAIKI) ===
 app.use(cors({
-    // Nanti kita akan tambahkan URL Vercel frontend di sini
-    origin: ['http://localhost:5173', 'https://NAMA-FRONTEND-ANDA.vercel.app'], 
+    origin: [
+        'http://localhost:5173', // Untuk lokal
+        'https://codveda-fullstack-project-2g5r.vercel.app', // Deploy lama Anda
+        'https://codveda-fullstack-project-uwd7.vercel.app'  // Deploy baru Anda
+    ], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 }));
 app.use(express.json());
@@ -27,7 +30,6 @@ app.use((req, res, next) => {
 });
 
 // RUTES
-// Kita tambahkan /api di depan rute dasar agar Vercel mudah membacanya
 app.get('/api', (req, res) => {
     res.send('Selamat Datang di API Mini E-commerce (Vercel)');
 });
@@ -37,5 +39,4 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 
 // --- PENTING UNTUK VERCEL ---
-// HAPUS 'app.listen()' DAN GANTI DENGAN INI:
 module.exports = app;

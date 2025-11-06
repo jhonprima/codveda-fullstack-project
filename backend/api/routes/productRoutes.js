@@ -21,7 +21,7 @@ router.post(
     upload.single('image'),
     async (req, res) => {
         try {
-            // === PERUBAHAN DI SINI ===
+            // === PERBAIKAN DI SINI ===
             // 1. Kita hanya ambil 'prisma'
             const { prisma } = req; 
             
