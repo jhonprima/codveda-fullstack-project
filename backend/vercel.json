@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "helpers": false,
+        "external": ["@prisma/client"]
+      }
+    },
+    {
+      "src": "prisma/schema.prisma",
+      "use": "@prisma/vercel-builder"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.js"
+    }
+  ],
+  "build": {
+    "env": {
+      "PRISMA_GENERATE_DATAPROXY": "true"
+    }
+  },
+  "dependencies": {
+    "@prisma/client": "^5.16.2",
+    "prisma": "^5.16.2"
+  }
+}
