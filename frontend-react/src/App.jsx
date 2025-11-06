@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { io } from 'socket.io-client';
+import jwtDecode from 'jwt-decode'; // Pastikan ini import default (tanpa {})
+// import { io } from 'socket.io-client'; // <-- DINONAKTIFKAN
 
 // Impor komponen
 import ProductList from './components/ProductList';
@@ -12,7 +12,7 @@ import WishlistView from './components/WishlistView';
 import Footer from './components/Footer';
 
 // Inisialisasi koneksi socket
-const socket = io('http://localhost:5000');
+// const socket = io('http://localhost:5000'); // <-- DINONAKTIFKAN
 
 // Komponen link
 function AuthLink({ onClick, children }) {
@@ -52,35 +52,23 @@ function App() {
   }, []);
 
   // --- EFEK (WebSocket) ---
-  useEffect(() => {
-    
-    // === PERBAIKAN STALE CLOSURE DI SINI ===
-    const onProductAdded = (message) => {
-        // Tampilkan pesan teks sederhana yang dikirim dari server
-        alert(`🔔 NOTIFIKASI BARU:\n${message}`);
-        
-        // Panggil 'setRefreshKey' LANGSUNG, bukan 'handleListChange'
-        // Ini adalah cara yang aman untuk memicu refresh dari dalam useEffect
-        setRefreshKey(prevKey => prevKey + 1);
-    };
-    // ======================================
-
-    function setupSocketListeners() {
-      // Mendengar event 'product_added'
-      socket.on('product_added', onProductAdded);
-    }
-
-    // Hanya jalankan listener jika user adalah Consumen
-    if (user && user.role === 'CONSUMEN') {
-      setupSocketListeners();
-    }
-
-    // Cleanup
-    return () => {
-      socket.off('product_added', onProductAdded);
-    };
-  // 'user' adalah satu-satunya dependensi yang benar
-  }, [user]); 
+  // === DINONAKTIFKAN UNTUK VERCEL DEPLOY ===
+  // useEffect(() => {
+  //   const onProductAdded = (message) => {
+  //     alert(`🔔 NOTIFIKASI BARU:\n${message}`);
+  //     setRefreshKey(prevKey => prevKey + 1);
+  //   };
+  //   function setupSocketListeners() {
+  //     socket.on('product_added', onProductAdded);
+  //   }
+  //   if (user && user.role === 'CONSUMEN') {
+  //     setupSocketListeners();
+  //   }
+  //   return () => {
+  //     socket.off('product_added', onProductAdded);
+  //   };
+  // }, [user]);
+  // ========================================
 
   // --- FUNGSI HANDLER ---
   const handleLogout = () => {
@@ -100,7 +88,6 @@ function App() {
     setIsMenuOpen(false);
   };
 
-  // handleListChange sekarang HANYA digunakan oleh Admin
   const handleListChange = () => {
     setRefreshKey(prevKey => prevKey + 1);
   };
@@ -204,7 +191,7 @@ function App() {
                     className={consumenView === 'wishlist' ? 'active' : ''}
                     onClick={() => setConsumenView('wishlist')}
                   >
-                    Lihat Favorit 
+                    Lihat Favorit ❤️
                   </button>
                 </nav>
                 
