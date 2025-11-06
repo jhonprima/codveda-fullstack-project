@@ -11,32 +11,35 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 const app = express();
 const prisma = new PrismaClient();
 
-// === MIDDLEWARE (INI BAGIAN YANG DIPERBAIKI) ===
+// MIDDLEWARE
 app.use(cors({
     origin: [
-        'http://localhost:5173', // Untuk lokal
-        'https://codveda-fullstack-project-2g5r.vercel.app', // Deploy lama
-        'https://codveda-fullstack-project-uwd7.vercel.app'  // Deploy baru (dari screenshot)
+        'http://localhost:5173', 
+        'https://codveda-fullstack-project-2g5r-poesxoosi-jhonprimas-projects.vercel.app', // URL Frontend lama Anda
+        'https://codveda-fullstack-project-uwd7.vercel.app', // URL Frontend baru Anda
+        'https://codveda-fullstack-project-2g5r-l63299pig-jhonprimas-projects.vercel.app' // URL Frontend dari screenshot terakhir
     ], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 }));
 app.use(express.json());
 
-// Middleware Prisma (Socket.io dinonaktifkan)
+// Middleware Prisma
 app.use((req, res, next) => {
     req.prisma = prisma;
-    // req.io = io; // Dinonaktifkan
     next();
 });
 
-// RUTES
-app.get('/api', (req, res) => {
+// === RUTES (PERBAIKAN DI SINI) ===
+// Kita HAPUS '/api' dari semua rute
+// Vercel sudah menangani '/api' berdasarkan struktur folder
+
+app.get('/', (req, res) => { // Rute dasar (root) untuk /api
     res.send('Selamat Datang di API Mini E-commerce (Vercel)');
 });
-app.use('/api/products', productRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/wishlist', wishlistRoutes);
+app.use('/products', productRoutes);
+app.use('/auth', authRoutes);
+app.use('/cart', cartRoutes);
+app.use('/wishlist', wishlistRoutes);
 
 // --- PENTING UNTUK VERCEL ---
 module.exports = app;
