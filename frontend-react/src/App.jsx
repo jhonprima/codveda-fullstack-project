@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode'; // Pastikan ini import default (tanpa {})
+import { jwtDecode } from 'jwt-decode'; // Pastikan ini import default (tanpa {})
 // import { io } from 'socket.io-client'; // <-- DINONAKTIFKAN
 
 // Impor komponen
