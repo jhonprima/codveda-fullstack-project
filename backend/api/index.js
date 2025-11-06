@@ -15,8 +15,8 @@ const prisma = new PrismaClient();
 app.use(cors({
     origin: [
         'http://localhost:5173', // Untuk lokal
-        'https://codveda-fullstack-project-2g5r.vercel.app', // Deploy lama Anda
-        'https://codveda-fullstack-project-uwd7.vercel.app'  // Deploy baru Anda
+        'https://codveda-fullstack-project-2g5r.vercel.app', // Deploy lama
+        'https://codveda-fullstack-project-uwd7.vercel.app'  // Deploy baru (dari screenshot)
     ], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 }));
