@@ -24,9 +24,5 @@
     "env": {
       "PRISMA_GENERATE_DATAPROXY": "true"
     }
-  },
-  "dependencies": {
-    "@prisma/client": "^5.16.2",
-    "prisma": "^5.16.2"
   }
 }
